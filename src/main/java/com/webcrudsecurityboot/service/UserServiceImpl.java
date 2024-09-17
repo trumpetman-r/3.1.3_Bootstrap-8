@@ -1,8 +1,6 @@
 package com.webcrudsecurityboot.service;
 
-import com.webcrudsecurityboot.model.Role;
 import com.webcrudsecurityboot.model.User;
-import com.webcrudsecurityboot.repository.RoleRepository;
 import com.webcrudsecurityboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +12,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -53,21 +49,5 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
-    }
-
-    @Override
-    @Transactional
-    public void saveRole(Role role) {
-        roleRepository.save(role);
-    }
-
-    @Override
-    public List<Role> getAllRoles() {
-        return roleRepository.findAll();
-    }
-
-    @Override
-    public Role getRoleById(Long id) {
-        return roleRepository.findById(id).orElse(null);
     }
 }

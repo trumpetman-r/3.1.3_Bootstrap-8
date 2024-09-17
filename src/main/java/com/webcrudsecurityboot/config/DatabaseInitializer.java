@@ -2,6 +2,7 @@ package com.webcrudsecurityboot.config;
 
 import com.webcrudsecurityboot.model.Role;
 import com.webcrudsecurityboot.model.User;
+import com.webcrudsecurityboot.service.RoleService;
 import com.webcrudsecurityboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,10 +15,12 @@ import java.util.Set;
 public class DatabaseInitializer {
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public DatabaseInitializer(UserService userService) {
+    public DatabaseInitializer(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @Transactional
@@ -25,8 +28,8 @@ public class DatabaseInitializer {
         Role roleAdmin = new Role("ROLE_ADMIN");
         Role roleUser = new Role("ROLE_USER");
 
-        userService.saveRole(roleAdmin);
-        userService.saveRole(roleUser);
+        roleService.saveRole(roleAdmin);
+        roleService.saveRole(roleUser);
 
         Set<Role> adminRoles = new HashSet<>();
         adminRoles.add(roleAdmin);
